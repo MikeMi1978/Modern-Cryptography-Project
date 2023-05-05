@@ -1,8 +1,11 @@
+# Modern Cryptography Project
+# Michael Mitchell Student # C00255151
 from datetime import datetime, timedelta
 from time import mktime
 from tornado.escape import json_decode, utf8
 from tornado.gen import coroutine
 from uuid import uuid4
+import bcrypt
 
 from .base import BaseHandler
 
@@ -59,7 +62,8 @@ class LoginHandler(BaseHandler):
             self.send_error(403, message='The email address and password are invalid!')
             return
 
-        if user['password'] != password:
+        hashed_password = user['password']
+        if not bcrypt.checkpw(password.encode('utf-8'), hashed_password):
             self.send_error(403, message='The email address and password are invalid!')
             return
 

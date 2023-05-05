@@ -36,6 +36,7 @@ class BaseHandler(RequestHandler):
         self.write_json()
 
     def write_json(self):
+        print(self.response)
         output = dumps(self.response)
         self.write(output)
 
